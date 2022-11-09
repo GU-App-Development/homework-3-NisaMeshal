@@ -9,26 +9,28 @@
     android:paddingLeft="16dp"
     android:paddingRight="16dp"
     android:paddingTop="16dp"
-    tools:context="com.hw3.comboapp.MainActivity"
-    android:background="@color/white">
+    tools:context="com.hw3.comboapp.MainActivity">
 
     <TextView
         android:id="@+id/label"
-        android:layout_height="50dp"
+        style="@style/banner"
         android:layout_width="match_parent"
-        style="@style/banner"/>
+        android:layout_height="50dp"
+        android:textColor="#5E35B1" />
 
     <Button
         android:id="@+id/pizza_app"
         style="@style/button"
+        android:onClick="onPizzaClick"
         android:text="@string/pizza_party"
-        android:onClick="onPizzaClick"/>
+        android:textColor="#5E35B1" />
 
     <Button
         android:id="@+id/lightsout_app"
         style="@style/button"
-        android:text="@string/lights_out"
+        android:layout_marginTop="20dp"
         android:onClick="onLightsoutClick"
-        android:layout_marginTop="20dp" />
+        android:text="@string/lights_out"
+        android:textColor="#5E35B1" />
 
 </LinearLayout>
