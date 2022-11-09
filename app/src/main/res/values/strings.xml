@@ -1,3 +1,5 @@
 <resources>
     <string name="app_name">Combo App</string>
+    <string name="pizza_party">Pizza Party</string>
+    <string name="lights_out">Lights Out</string>
 </resources>
