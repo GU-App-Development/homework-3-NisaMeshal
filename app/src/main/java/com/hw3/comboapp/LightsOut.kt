@@ -1,9 +1,12 @@
 package com.hw3.comboapp
 
+import android.app.Activity
+import android.content.Intent
 import android.os.Bundle
 import android.view.View
 import android.widget.GridLayout
 import android.widget.Toast
+import androidx.activity.result.contract.ActivityResultContracts
 import androidx.appcompat.app.AppCompatActivity
 import androidx.core.content.ContextCompat
 import androidx.core.view.children
@@ -15,11 +18,13 @@ class LightsOut : AppCompatActivity() {
     private lateinit var lightGridLayout: GridLayout
     private var lightOnColor = 0
     private var lightOffColor = 0
+    private var lightOnColorId = 0
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_lights_out)
 
+        lightOnColorId = R.color.yellow
         lightGridLayout = findViewById(R.id.light_grid)
 
         // Add the same click handler to all grid buttons
@@ -51,7 +56,6 @@ class LightsOut : AppCompatActivity() {
     }
 
     private fun onLightButtonClick(view: View) {
-
         // Find the button's row and col
         val buttonIndex = lightGridLayout.indexOfChild(view)
         val row = buttonIndex / GRID_SIZE
@@ -86,5 +90,25 @@ class LightsOut : AppCompatActivity() {
 
     fun onNewGameClick(view: View) {
         startGame()
+    }
+
+    fun onHelpClick(view: View) {
+        val intent = Intent(this, HelpActivity::class.java)
+        startActivity(intent)
+    }
+
+    fun onChangeColorClick(view: View) {
+        val intent = Intent(this, ColorActivity::class.java)
+        intent.putExtra(EXTRA_COLOR, lightOnColorId)
+        colorResultLauncher.launch(intent)
+    }
+
+    val colorResultLauncher = registerForActivityResult(
+        ActivityResultContracts.StartActivityForResult()) { result ->
+        if (result.resultCode == Activity.RESULT_OK) {
+            lightOnColorId = result.data!!.getIntExtra(EXTRA_COLOR, R.color.yellow)
+            lightOnColor = ContextCompat.getColor(this, lightOnColorId)
+            setButtonColors()
+        }
     }
 }
