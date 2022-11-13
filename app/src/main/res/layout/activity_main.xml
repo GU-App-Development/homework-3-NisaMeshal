@@ -16,14 +16,12 @@
     <Button
         android:id="@+id/pizza_app"
         style="@style/button"
-        android:onClick="onPizzaClick"
         android:text="@string/pizza_party"/>
 
     <Button
         android:id="@+id/lightsout_app"
         style="@style/button"
         android:layout_marginTop="20dp"
-        android:onClick="onLightsoutClick"
         android:text="@string/lights_out"/>
 
 </LinearLayout>

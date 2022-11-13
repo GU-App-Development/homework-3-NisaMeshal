@@ -4,6 +4,7 @@ import android.app.Activity
 import android.content.Intent
 import android.os.Bundle
 import android.view.View
+import android.widget.Button
 import android.widget.GridLayout
 import android.widget.Toast
 import androidx.activity.result.contract.ActivityResultContracts
@@ -43,6 +44,24 @@ class LightsOut : AppCompatActivity() {
             game.state = savedInstanceState.getString(GAME_STATE)!!
             setButtonColors()
         }
+
+        val newGameButton = findViewById<Button>(R.id.new_game_button)
+        newGameButton.setOnClickListener {
+            startGame()
+        }
+
+        val helpButton = findViewById<Button>(R.id.help_button)
+        helpButton.setOnClickListener {
+            val intent = Intent(this, HelpActivity::class.java)
+            startActivity(intent)
+        }
+
+        val colorButton = findViewById<Button>(R.id.change_color_button)
+        colorButton.setOnClickListener {
+            val intent = Intent(this, ColorActivity::class.java)
+            intent.putExtra(EXTRA_COLOR, lightOnColorId)
+            colorResultLauncher.launch(intent)
+        }
     }
 
     override fun onSaveInstanceState(outState: Bundle) {
@@ -71,7 +90,6 @@ class LightsOut : AppCompatActivity() {
     }
 
     private fun setButtonColors() {
-
         // Set all buttons' background color
         for (buttonIndex in 0 until lightGridLayout.childCount) {
             val gridButton = lightGridLayout.getChildAt(buttonIndex)
@@ -86,21 +104,6 @@ class LightsOut : AppCompatActivity() {
                 gridButton.setBackgroundColor(lightOffColor)
             }
         }
-    }
-
-    fun onNewGameClick(view: View) {
-        startGame()
-    }
-
-    fun onHelpClick(view: View) {
-        val intent = Intent(this, HelpActivity::class.java)
-        startActivity(intent)
-    }
-
-    fun onChangeColorClick(view: View) {
-        val intent = Intent(this, ColorActivity::class.java)
-        intent.putExtra(EXTRA_COLOR, lightOnColorId)
-        colorResultLauncher.launch(intent)
     }
 
     val colorResultLauncher = registerForActivityResult(

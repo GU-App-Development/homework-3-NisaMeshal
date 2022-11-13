@@ -2,6 +2,7 @@ package com.hw3.comboapp
 
 import android.os.Bundle
 import android.view.View
+import android.widget.Button
 import android.widget.EditText
 import android.widget.RadioGroup
 import android.widget.TextView
@@ -19,26 +20,27 @@ class PizzaParty : AppCompatActivity() {
         numAttendEditText = findViewById(R.id.num_attend_edit_text)
         numPizzasTextView = findViewById(R.id.num_pizzas_text_view)
         howHungryRadioGroup = findViewById(R.id.hungry_radio_group)
-    }
 
-    fun calculateClick(view: View) {
-        //grab from edit text and convert to int
-        val numAttendStr = numAttendEditText.text.toString()
-        val numAttend = numAttendStr.toInt()
+        val calculateButton = findViewById<Button>(R.id.calc_button)
+        calculateButton.setOnClickListener {
+            //grab from edit text and convert to int
+            val numAttendStr = numAttendEditText.text.toString()
+            val numAttend = numAttendStr.toInt()
 
-        //radio group selection
-        val hungerLevel = when (howHungryRadioGroup.getCheckedRadioButtonId()) {
-            R.id.light_radio_button -> PizzaCalculator.HungerLevel.LIGHT
-            R.id.medium_radio_button -> PizzaCalculator.HungerLevel.MEDIUM
-            else -> PizzaCalculator.HungerLevel.RAVENOUS
+            //radio group selection
+            val hungerLevel = when (howHungryRadioGroup.checkedRadioButtonId) {
+                R.id.light_radio_button -> PizzaCalculator.HungerLevel.LIGHT
+                R.id.medium_radio_button -> PizzaCalculator.HungerLevel.MEDIUM
+                else -> PizzaCalculator.HungerLevel.RAVENOUS
+            }
+
+            //number of pizzas needed
+            val calc = PizzaCalculator(numAttend, hungerLevel)
+            val totalPizzas = calc.totalPizzas
+
+            //display
+            val totalText = getString(R.string.total_pizzas, totalPizzas)
+            numPizzasTextView.text = totalText
         }
-
-        //number of pizzas needed
-        val calc = PizzaCalculator(numAttend, hungerLevel)
-        val totalPizzas = calc.totalPizzas
-
-        //display
-        val totalText = getString(R.string.total_pizzas, totalPizzas)
-        numPizzasTextView.setText(totalText)
     }
 }
