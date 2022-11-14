@@ -69,14 +69,19 @@ class LightsOut : AppCompatActivity() {
             colorResultLauncher.launch(intent)
         }
 
-        val intent = Intent(this, MainActivity::class.java)
-        if(gamesWon == 0) {
-            intent.putExtra("games_won", DEFAULT_GAME)
-        } else {
-            gameMessage = "$gameMessage$gamesWon!"
-            intent.putExtra("games_won", gameMessage)
+        val shareGame = findViewById<Button>(R.id.share_game)
+        shareGame.setOnClickListener {
+            val intent = Intent()
+            if(gamesWon == 0) {
+                intent.putExtra("games_won", DEFAULT_GAME)
+                setResult(RESULT_OK, intent)
+            } else {
+                gameMessage = "$gameMessage$gamesWon!"
+                intent.putExtra("games_won", gameMessage)
+                setResult(RESULT_OK, intent)
+            }
+            finish()
         }
-        startActivity(intent)
     }
 
     override fun onCreateOptionsMenu(menu: Menu?): Boolean {
@@ -93,6 +98,7 @@ class LightsOut : AppCompatActivity() {
             }
             R.id.landing_button -> {
                 val intent = Intent(this, MainActivity::class.java)
+                startActivity(intent)
                 true
             }
             else -> super.onOptionsItemSelected(item)

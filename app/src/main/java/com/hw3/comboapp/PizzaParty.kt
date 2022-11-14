@@ -2,6 +2,7 @@ package com.hw3.comboapp
 
 import android.content.Intent
 import android.os.Bundle
+import android.util.Log
 import android.view.Menu
 import android.view.MenuItem
 import android.view.View
@@ -12,6 +13,8 @@ import android.widget.TextView
 import androidx.appcompat.app.AppCompatActivity
 
 const val DEFAULT_MESSAGE: String = "No pizza calculated yet!"
+
+const val TAGP = "PizzaParty"
 
 class PizzaParty : AppCompatActivity() {
     private lateinit var numAttendEditText: EditText
@@ -52,16 +55,25 @@ class PizzaParty : AppCompatActivity() {
             val totalText = getString(R.string.total_pizzas, totalPizzas)
             numPizzasTextView.text = totalText
             calculatedPizza = totalText
+
+
         }
 
-        val intent = Intent(this, MainActivity::class.java)
-        if(totalPizzas == 0) {
-            intent.putExtra("pizza_calc", DEFAULT_MESSAGE)
-        } else {
-            val messageString = "$calculatedPizza. People attending: $numAttend. Hunger level: $hungerLevelStr"
-            intent.putExtra("pizza_calc", messageString)
+        val shareButton = findViewById<Button>(R.id.share_button)
+        shareButton.setOnClickListener {
+            val intent = Intent()
+            if(totalPizzas == 0) {
+                intent.putExtra("pizza_calc", DEFAULT_MESSAGE)
+                setResult(RESULT_OK, intent)
+                Log.d(TAGP, DEFAULT_MESSAGE)
+            } else {
+                val messageString = "$calculatedPizza \n People attending: $numAttend \n Hunger level: $hungerLevelStr"
+                intent.putExtra("pizza_calc", messageString)
+                setResult(RESULT_OK, intent)
+                Log.d(TAGP, messageString)
+            }
+            finish()
         }
-        startActivity(intent)
     }
 
     override fun onCreateOptionsMenu(menu: Menu?): Boolean {
@@ -78,6 +90,7 @@ class PizzaParty : AppCompatActivity() {
             }
             R.id.landing_button -> {
                 val intent = Intent(this, MainActivity::class.java)
+                startActivity(intent)
                 true
             }
             else -> super.onOptionsItemSelected(item)

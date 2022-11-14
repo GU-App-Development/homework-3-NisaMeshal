@@ -21,4 +21,5 @@
     <string name="home">Home</string>
     <string name="edit_text_hint">Enter your message here...</string>
     <string name="send">Send</string>
+    <string name="share">Share data</string>
 </resources>
