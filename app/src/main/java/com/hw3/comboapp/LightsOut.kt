@@ -3,6 +3,8 @@ package com.hw3.comboapp
 import android.app.Activity
 import android.content.Intent
 import android.os.Bundle
+import android.view.Menu
+import android.view.MenuItem
 import android.view.View
 import android.widget.Button
 import android.widget.GridLayout
@@ -13,6 +15,7 @@ import androidx.core.content.ContextCompat
 import androidx.core.view.children
 
 const val GAME_STATE = "gameState"
+const val DEFAULT_GAME = "No games played yet."
 
 class LightsOut : AppCompatActivity() {
     private lateinit var game: LightsOutModel
@@ -20,6 +23,9 @@ class LightsOut : AppCompatActivity() {
     private var lightOnColor = 0
     private var lightOffColor = 0
     private var lightOnColorId = 0
+    private var gamesWon: Int = 0
+    var gameMessage: String = "Lights Out games won today: "
+
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -62,6 +68,35 @@ class LightsOut : AppCompatActivity() {
             intent.putExtra(EXTRA_COLOR, lightOnColorId)
             colorResultLauncher.launch(intent)
         }
+
+        val intent = Intent(this, MainActivity::class.java)
+        if(gamesWon == 0) {
+            intent.putExtra("games_won", DEFAULT_GAME)
+        } else {
+            gameMessage = "$gameMessage$gamesWon!"
+            intent.putExtra("games_won", gameMessage)
+        }
+        startActivity(intent)
+    }
+
+    override fun onCreateOptionsMenu(menu: Menu?): Boolean {
+        menuInflater.inflate(R.menu.appbar_menu, menu)
+        return super.onCreateOptionsMenu(menu)
+    }
+
+    override fun onOptionsItemSelected(item: MenuItem): Boolean {
+        return when (item.itemId) {
+            R.id.switch_button -> {
+                val intent = Intent(this, PizzaParty::class.java)
+                startActivity(intent)
+                true
+            }
+            R.id.landing_button -> {
+                val intent = Intent(this, MainActivity::class.java)
+                true
+            }
+            else -> super.onOptionsItemSelected(item)
+        }
     }
 
     override fun onSaveInstanceState(outState: Bundle) {
@@ -85,6 +120,7 @@ class LightsOut : AppCompatActivity() {
 
         // Congratulate the user if the game is over
         if (game.isGameOver) {
+            gamesWon++
             Toast.makeText(this, R.string.congrats, Toast.LENGTH_SHORT).show()
         }
     }

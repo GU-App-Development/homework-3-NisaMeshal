@@ -17,4 +17,8 @@
     <string name="help_button">Help</string>
     <string name="color_button">Change Color</string>
     <string name="choose_color">Choose a color:</string>
+    <string name="switch_apps">Switch</string>
+    <string name="home">Home</string>
+    <string name="edit_text_hint">Enter your message here...</string>
+    <string name="send">Send</string>
 </resources>

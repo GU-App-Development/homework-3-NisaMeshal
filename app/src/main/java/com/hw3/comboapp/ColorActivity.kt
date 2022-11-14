@@ -13,6 +13,7 @@ class ColorActivity : AppCompatActivity() {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_color)
 
+        //gets color id from main
         val colorId = intent.getIntExtra(EXTRA_COLOR, R.color.yellow)
 
         val radioId = when(colorId) {
