@@ -11,7 +11,7 @@
     android:paddingRight="16dp"
     android:paddingTop="16dp"
     tools:context="com.hw3.comboapp.MainActivity"
-    >
+    android:theme="@style/Theme.ComboApp">
 
     <Button
         android:id="@+id/pizza_app"

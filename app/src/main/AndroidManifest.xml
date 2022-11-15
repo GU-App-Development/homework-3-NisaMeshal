@@ -30,7 +30,8 @@
         </activity>
         <activity
             android:name=".MainActivity"
-            android:exported="true">
+            android:exported="true"
+            >
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
 
@@ -44,7 +45,8 @@
         <activity
             android:name=".PizzaParty"
             android:exported="false"
-            android:parentActivityName=".MainActivity">
+            android:parentActivityName=".MainActivity"
+            android:theme="@style/Theme.PizzaParty">
             <meta-data
                 android:name="android.app.lib_name"
                 android:value="" />
@@ -52,7 +54,8 @@
         <activity
             android:name=".LightsOut"
             android:exported="false"
-            android:parentActivityName=".MainActivity">
+            android:parentActivityName=".MainActivity"
+            android:theme="@style/Theme.LightsOut">
             <meta-data
                 android:name="android.app.lib_name"
                 android:value="" />
